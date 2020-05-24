@@ -105,9 +105,6 @@ export function activate(context: vscode.ExtensionContext) {
             detailMessage = DEFAULT_DETAIL;
           }
           let limit = undefined;
-          if (showFew(response, document, position)) {
-            limit = 1;
-          }
           let index = 0;
           for (const entry of response.results) {
             results.push(makeCompletionItem({
