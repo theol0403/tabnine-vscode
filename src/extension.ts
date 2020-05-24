@@ -10,7 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const CHAR_LIMIT = 100000;
-const MAX_NUM_RESULTS = 5;
+const MAX_NUM_RESULTS = 10;
 const DEFAULT_DETAIL = "TabNine";
 
 export function activate(context: vscode.ExtensionContext) {
