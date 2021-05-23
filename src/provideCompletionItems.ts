@@ -59,10 +59,7 @@ async function completionsListFor(
       return [];
     }
 
-    const limit =
-      showFew(response, document, position) || response.is_locked
-        ? 1
-        : response.results.length;
+    const limit = response.results.length;
 
     return response.results.slice(0, limit).map((entry, index) =>
       makeCompletionItem({
@@ -133,6 +130,11 @@ function makeCompletionItem(args: {
       title: "accept completion",
     };
   }
+
+  item.command = {
+    title: "",
+    command: "editor.action.triggerSuggest",
+  };
 
   if (args.entry.new_suffix) {
     item.insertText
@@ -215,21 +217,4 @@ function completionIsAllowed(
   }
 
   return true;
-}
-
-function showFew(
-  response: AutocompleteResult,
-  document: vscode.TextDocument,
-  position: vscode.Position
-): boolean {
-  if (response.results.some((entry) => entry.kind || entry.documentation)) {
-    return false;
-  }
-
-  const leftPoint = position.translate(0, -response.old_prefix.length);
-  const tail = document.getText(
-    new vscode.Range(document.lineAt(leftPoint).range.start, leftPoint)
-  );
-
-  return tail.endsWith(".") || tail.endsWith("::");
 }
